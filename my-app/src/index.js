@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// mac is unreal pathetic
-//can't even browse or use git
-// so bookmarking in notes: left off at renderSquare this.state.squares[i] under "lifting state up"
+// bookmark at "Detecting Changes" subheading
 class Square extends React.Component
 {
-    render() {
+    render()
+    {
         return (
             <button className="square" onClick =
                 {
-                    () => this.props.onClick({value: 'X'})}>
+                    () => this.props.onClick()}>
+                // the Board parent class possess a psuedo-interface method
+                // Thus, onClick() here functions as an override.
                 {this.props.value}
             </button>
         );
@@ -27,19 +28,30 @@ class Board extends React.Component
                 squares: Array(9).fill(null),
             };
     }
-    renderSquare(i) {
+
+    handleClick(i)
+    {
+        // in this context slice() copies the squares array
+        // in this way, we won't modify the pre-existing array state
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares:squares});
+    }
+
+    renderSquare(i)
+    {
         return (
-            <Square value = {this.state.squares[i]}
-            onClick =
-            {
-                () => this.handleClick(i)
-            }
+            <Square value={this.state.squares[i]}
+                    onClick=
+                        {
+                            () => this.handleClick(i)
+                        }
             />
         );
     }
-    }
 
-    render() {
+    render()
+    {
         const status = 'Next player: X';
 
         return (
