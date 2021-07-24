@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // bookmark at "Detecting Changes" subheading
-class Square extends React.Component
+/*class Square extends React.Component
 {
     render()
     {
@@ -16,6 +16,15 @@ class Square extends React.Component
             </button>
         );
     }
+}*/
+
+function Square(props)
+{
+    return (
+        <button className = "square" onClick = {props.onClick}>
+            {props.value}
+        </button>
+    )
 }
 
 class Board extends React.Component
